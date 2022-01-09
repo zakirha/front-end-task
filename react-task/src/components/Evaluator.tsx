@@ -4,7 +4,6 @@ import projectEvaluatorData from "../data/evaluator-data.json"
 import { Project } from "../code/project"
 import ProjectView from "./ProjectView";
 import {setNoOfProjects} from '../code/actions'
-import store from "../code/store"
 
 
 function Evaluator() {
@@ -17,20 +16,18 @@ function Evaluator() {
     projectEvaluatorData.map((p:any) => {
         let project = new Project(p.copId, p.acId, p.project.name, p.subProject.name);
         
-        //console.log(p.links)
         let projectLinks = p.links
         if (projectLinks !== undefined) {
             let linkArray: Array<string> = []
             projectLinks.map((l:any) => {
-                //console.log(l.href)
                 if (l.href !== undefined) linkArray.push(l.href)
             })
             project.projectLinks = linkArray
         }
-        //console.log(project)
         projects.push(project)
     })
 
+    //-- grouping projects by name
     let projectGroup = new Map()
 
     projects.map( (proj: Project) => {
@@ -48,13 +45,9 @@ function Evaluator() {
         
     })
 
-    //console.log("No of projects for Evaluation " + projects.length)
+    //-- send to the REDUX store - the Tab button needs this value to render
     dispatch(setNoOfProjects("Evaluator", projects.length))
   
-    //const state = store.getState();
-    //console.log("State in REdux is ")
-    //console.log(state)
-    //console.log(JSON.stringify(state))
 
     //console.log("Unique Evaluator Projects")
     //for (let k of projectGroup.keys()) {
@@ -72,10 +65,6 @@ function Evaluator() {
 
     projectGroups = Array.from(projectGroup.values())
 
-    //console.log('+++++++++++++++++++++++')
-    //projectGroups.map( (myProject:any) => {
-    //    console.log(myProject)
-    //})
 
     return (
         <div>

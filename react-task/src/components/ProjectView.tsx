@@ -7,7 +7,6 @@ function ProjectView(props:any) {
     let projectName:string = 'undefined'
     if (projectsArr != undefined && projectsArr.length > 0) {
         let projName = projectsArr[0].projectName
-        //console.log('Project Name is' + projName)
         projectName = projName;
     }
 
@@ -16,10 +15,8 @@ function ProjectView(props:any) {
     const onClick = () => {
 
         if (selectedClass === 'nopanel') {
-            console.log("not already selected - lets select now")
             setSelectedClass("panel")
         } else {
-            console.log("unselect please")
             setSelectedClass("nopanel")
         }   
     }

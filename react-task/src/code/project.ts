@@ -1,5 +1,6 @@
 export class Project {
 
+    // TODO - define the properties with leading _ to discourage them from being accessed 
     copId: string
     accId: string
     name: string
@@ -14,11 +15,7 @@ export class Project {
     }
 
     toString() {
-		let str = this.name.toUpperCase().big().bold().fontcolor('orange') + `<br/>
-									Subproject ${this.subProjName}<br/>
-									${this.copId} [Account Id ${this.accId}]<br/>
-                                    ${this.links}`
-
+		let str = this.name + `Subproject ${this.subProjName} ${this.copId} [Account Id ${this.accId}] ${this.links}`
         return str
     }
 

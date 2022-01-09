@@ -4,7 +4,6 @@ import { Project } from "../code/project"
 import ProjectView from "./ProjectView";
 
 import {setNoOfProjects} from '../code/actions'
-import store from "../code/store"
 
 
 function Creator() {
@@ -15,14 +14,11 @@ function Creator() {
     const dispatch : any = useDispatch()
 
     projectCreatorData.map((p:any) => {
-
         let project = new Project(p.copId, p.acId, p.project.name, p.subProject.name);
-        //console.log(project)
         projects.push(project)
     })
 
-    //console.log(projects.length)
-
+    //-- group projects by their name
     let projectGroup = new Map()
 
     projects.map( (proj: Project) => {
@@ -40,14 +36,8 @@ function Creator() {
         
     })
 
-    //console.log("No of projects for X As creator " + projects.length)
-
+    //-- send it to the Redux store - the Tab title needs to pick it up from there
     dispatch(setNoOfProjects("Creator", projects.length))
-  
-    //const state = store.getState();
-    //console.log("State in REdux is ")
-    //console.log(state)
-    //console.log(JSON.stringify(state))
 
     projectGroups = Array.from(projectGroup.values())
 
