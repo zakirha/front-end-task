@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 //import {useDispatch} from "react-redux"
 //import {selectTab} from '../code/actions'
 import projectEvaluatorData from "../data/evaluator-data.json"
@@ -13,40 +13,45 @@ type Props = {
 
   const TabTitle: React.FC<Props> = ({ title, index, selectedTab, setSelectedTab}) => {
 
-    //const dispatch : any = useDispatch()
+    const [evalTitle, setEvalTitle] = useState("EVALUATOR")
+    const [creatTitle, setCreatorTitle] = useState("CREATOR")
 
-    let forEvalAsEvaluator:number = 0
-    let forEvalAsCreator:number = 0  
-    
-    let evaluatorTitle: string = ''
-    let creatorTitle: string = ''
-
-    const state = store.getState();
-    //console.log("State in REdux is " + JSON.stringify(state) )
-
-    console.log("projects4Creator" + state.assesments4Creator)
-    console.log("projects4Evaluator" + state.assesments4Evaluator)
-
-    forEvalAsCreator = state.assesments4Creator
-    forEvalAsEvaluator = state.assesments4Evaluator
-
-    evaluatorTitle = "EVALUATOR (" + forEvalAsEvaluator + ")"
-    creatorTitle = "CREATOR (" + forEvalAsCreator  + ")"
-
-    console.log("Evaluator title is " + evaluatorTitle + " and Creator title is " + creatorTitle)
 
     const onClick = useCallback(() => {
-        setSelectedTab(index)
-        //dispatch(selectTab(title, index))
+
+      let evaluatorTitle: string = ''
+      let creatorTitle: string = ''
+
+      let forEvalAsEvaluator:number = 0
+      let forEvalAsCreator:number = 0  
+
+      const state = store.getState();
+
+      console.log("projects4Creator" + state.assesments4Creator)
+      console.log("projects4Evaluator" + state.assesments4Evaluator)
+
+      forEvalAsCreator = state.assesments4Creator
+      forEvalAsEvaluator = state.assesments4Evaluator
+
+      evaluatorTitle = "EVALUATOR (" + forEvalAsEvaluator + ")"
+      creatorTitle = "CREATOR (" + forEvalAsCreator  + ")"
+
+      console.log("Evaluator title is " + evaluatorTitle + " and Creator title is " + creatorTitle)
+
+      setEvalTitle(evaluatorTitle)
+      setCreatorTitle(creatorTitle)
+
+      setSelectedTab(index)
+      //dispatch(selectTab(title, index))
   
-      }, [setSelectedTab, index])
+    }, [setSelectedTab, index])
     
 
   return (
     <li>
       <button onClick={onClick}
           className={index === selectedTab? "buttonactive": "buttoninactive"}>
-            {title ==="EVALUATOR"? evaluatorTitle : creatorTitle}
+            {title ==="EVALUATOR"? evalTitle : creatTitle}
           </button>
     </li>
   )
