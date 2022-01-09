@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- meta block -->
+	<title>Auros Task - DHTMLX Grid</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+
+    <link rel="stylesheet" href="grid/grid.css">
+    <script type="text/javascript" src="grid/grid.js"></script>
+    
+
+    <link rel="stylesheet" href="index.css">
+
+    <script type="text/javascript" src="data/data.json"></script>
+    <script type="text/javascript" src="data/data.js"></script>
+
+    <body>
+        <header class="dhx_sample-header">
+            <div class="dhx_sample-header__main">
+                <h1 class="dhx_sample-header__title">
+                    <div class="dhx_sample-header__content">
+                       Auros Grid Task
+                    </div>
+                </h1>
+            </div>
+        </header>
+        <section class="dhx_sample-container" style="min-height: 400px; height: 400px">
+            <div style="height: 100%; width: 100%" id="grid"></div>
+        </section>
+
+        <script type="text/javascript">
+
+ 
+
+            const grid = new dhx.Grid("grid", {
+                columns:[
+                    {
+                        "id":"groupId",
+                        "width":70,
+                        "header":[
+                            {
+                                "text":"CoP ID",
+                                "toolTip":null
+                            },
+                            {
+                                "content":"inputFilter"
+                            }
+                        ],
+                        "type":"string",
+                        "align":"left",
+                        "resizable":true,
+                        "editing":false,
+                        "sortable":true
+                    },
+                    {
+                        "id":"name",
+                        "width":300,
+                        "header":[
+                            {
+                                "text":"CoP Name",
+                                "toolTip":null
+                            },
+                            {
+                                "content":"inputFilter"
+                            }
+                        ],
+                        "type":"string",
+                        "align":"left",
+                        "resizable":true,
+                        "editing":false,
+                        "sortable":true
+                    },
+                    {
+                        "id":"description",
+                        "width":300,
+                        "header":[
+                            {
+                                "text":"CoP Description",
+                                "toolTip":null
+                            },
+                            {
+                                "content":"inputFilter"
+                            }
+                        ],
+                        "type":"string",
+                        "align":"left",
+                        "resizable":true,
+                        "editing":false,
+                        "sortable":true
+                    },
+                    {
+                        "id":"category",
+                        "width":150,
+                        "header":[
+                            {
+                                "text":"CoP Category",
+                                "toolTip":null
+                            },
+                            {
+                                "content":"inputFilter"
+                            }
+                        ],
+                        "type":"string",
+                        "align":"left",
+                        "resizable":true,
+                        "editing":false,
+                        "sortable":true
+                    },
+                    {
+                        "id":"creationDate",
+                        "width":130,
+                        "header":[
+                            {
+                                "text":"Creation Date",
+                                "toolTip":null
+                            },
+                            {
+                                "content":"inputFilter"
+                            }
+                        ],
+                        "type":"date",
+                        "dateFormat": "%d-%M-%Y",
+                        "align":"center",
+                        "resizable":true,
+                        "editing":false,
+                        "sortable":true
+                    },
+                    {
+                        "id":"formattedKpacsCounter",
+                        "width":180,
+                        "header":[
+                            {
+                                "text":"Number of K-PACs",
+                                "toolTip":null
+                            },
+                            {
+                                "content":"inputFilter"
+                            }
+                        ],
+                        "type":"string",
+                        "align":"center",
+                        "resizable":true,
+                        "editing":false,
+                        "sortable":false
+                    }
+                ],
+				autoWidth: true,
+                leftSplit: 2,
+                editable: true,
+                dragItem: "both",
+                keyNavigation: true,
+                selection: "row"
+            });
+
+
+            if (window.performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+                    console.info( "This page is reloaded" );
+                    if (localStorage.getItem("copGrid") === null) {
+                        //-- localStorage has been cleared off unfortunately (bad luck) :-(
+                        grid.data.parse(copData)
+                    } else {
+                        var existingSortedState = localStorage.getItem("copGrid")
+                        grid.data.parse(existingSortedState);
+                    }
+            } else {
+                //-- page is being hit for the first time and is not a reload
+                grid.data.parse(copData)
+            }
+
+            //-- save all sort to local storage - so that we can restore on a page reload
+            grid.events.on("afterSort", (col, dir) => {
+                var state = grid.data.serialize()
+                window.localStorage.setItem("copGrid", JSON.stringify(state));
+
+            });
+
+            
+
+        </script>
+    </body>
+
+</html>
