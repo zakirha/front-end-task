@@ -16,11 +16,11 @@ type Props = {
 
   const TabTitle: React.FC<Props> = ({ title, index, selectedTab, setSelectedTab}) => {
 
+    //-- getting the number of assessments by evaluator and creator
     let noOfProjectsByEvaluator = 0
     let noOfProjectsByCreator = 0
 
-    const dispatch : any = useDispatch()
-
+    //-- only way to get the count is to loop thru the json array
     projectEvaluatorData.map((p:any) => {
       noOfProjectsByEvaluator += 1
     })
@@ -29,9 +29,12 @@ type Props = {
       noOfProjectsByCreator += 1
     })
 
+    //-- dispatch this - the underlying creator-data or evaluator-data  may have changed
+    const dispatch : any = useDispatch()
     dispatch(setNoOfProjects("Creator", noOfProjectsByCreator))
     dispatch(setNoOfProjects("Evaluator",noOfProjectsByEvaluator))
 
+    //-- now lets set the title for our tabs using the count values we got earlier
     const [evalTitle, setEvalTitle] = useState("EVALUATOR (" + noOfProjectsByEvaluator + ")")
     const [creatTitle, setCreatorTitle] = useState("CREATOR(" + noOfProjectsByCreator + ")")
 

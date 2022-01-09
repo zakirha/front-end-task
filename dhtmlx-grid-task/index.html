@@ -156,20 +156,20 @@
 
 
             if (window.performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-                    console.info( "This page is reloaded" );
+                    //-- means this is a page reload
                     if (localStorage.getItem("copGrid") === null) {
-                        //-- localStorage has been cleared off unfortunately (bad luck) :-(
-                        grid.data.parse(copData)
+                        //-- somebody cleared our localStorage (bad luck) lets reload data again (sorted values lost here)                       grid.data.parse(copData)
                     } else {
+                        //-- get the data from local storage and load 'em in 
                         var existingSortedState = localStorage.getItem("copGrid")
                         grid.data.parse(existingSortedState);
                     }
             } else {
-                //-- page is being hit for the first time and is not a reload
+                //-- page is being hit for the first time and is not a reload (get all the data)
                 grid.data.parse(copData)
             }
 
-            //-- save all sort to local storage - so that we can restore on a page reload
+            //-- save all sort to local storage - so that we can restore back on a page reload
             grid.events.on("afterSort", (col, dir) => {
                 var state = grid.data.serialize()
                 window.localStorage.setItem("copGrid", JSON.stringify(state));
