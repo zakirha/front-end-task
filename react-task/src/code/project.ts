@@ -23,8 +23,8 @@ export class Project {
     }
 
 
-    get companyId () { return this.copId}
-    set companyId (copId: string) { this.copId = copId}
+    get communityOfPractiseId () { return this.copId}
+    set communityOfPractiseId (copId: string) { this.copId = copId}
 
     get accountId () { return this.accId}
     set accountId (accId: string) { this.accId = accId}

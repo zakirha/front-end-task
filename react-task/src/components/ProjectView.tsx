@@ -26,7 +26,7 @@ function ProjectView(props:any) {
 
     return (
         <div>
-            <button onClick={onClick} className="accordion">{projectName}</button>
+            <button onClick={onClick} className="accordion"><b>{projectName}</b></button>
             <div  className={selectedClass}>
                 {
                     (props.groups.length === 0) ?
