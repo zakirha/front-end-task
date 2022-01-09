@@ -1,5 +1,11 @@
 import React, { useCallback, useState } from "react"
+import {useDispatch} from "react-redux"
+
 import store from "../code/store"
+
+import projectCreatorData from "../data/creator-data.json"
+import projectEvaluatorData from "../data/evaluator-data.json"
+import {setNoOfProjects} from '../code/actions'
 
 type Props = {
     title: string
@@ -10,8 +16,24 @@ type Props = {
 
   const TabTitle: React.FC<Props> = ({ title, index, selectedTab, setSelectedTab}) => {
 
-    const [evalTitle, setEvalTitle] = useState("EVALUATOR")
-    const [creatTitle, setCreatorTitle] = useState("CREATOR")
+    let noOfProjectsByEvaluator = 0
+    let noOfProjectsByCreator = 0
+
+    const dispatch : any = useDispatch()
+
+    projectEvaluatorData.map((p:any) => {
+      noOfProjectsByEvaluator += 1
+    })
+
+    projectCreatorData.map((p:any) => {
+      noOfProjectsByCreator += 1
+    })
+
+    dispatch(setNoOfProjects("Creator", noOfProjectsByCreator))
+    dispatch(setNoOfProjects("Evaluator",noOfProjectsByEvaluator))
+
+    const [evalTitle, setEvalTitle] = useState("EVALUATOR (" + noOfProjectsByEvaluator + ")")
+    const [creatTitle, setCreatorTitle] = useState("CREATOR(" + noOfProjectsByCreator + ")")
 
 
     const onClick = useCallback(() => {
